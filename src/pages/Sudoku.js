@@ -78,14 +78,24 @@ const Sudoku = () => {
     setLetterPlacements(newLetterPlacements)
   }
 
-  const verifySolution = (e) => {
-    e.preventDefault()
+  const verifySolution = () => {
     for (let row = 0; row < boardCellLength; row++) {
       for (let col = 0; col < boardCellLength; col++) {
-        if (!checkIfValidPlacement(row, col)) {
+        if (!checkIfValidPlacement(letterPlacements, row, col, letterPlacements[row][col]) || letterPlacements[row][col] === "") {
           return false
         }
       }
+    }
+
+    return true
+  }
+
+  const verifyClickHandler = (e) => {
+    e.preventDefault()
+    if (verifySolution()) {
+      alert("You win!")
+    } else {
+      alert("Try again!")
     }
   }
 
@@ -107,7 +117,7 @@ const Sudoku = () => {
       </div>
       <button
         className="verifyButton"
-        onClick={verifySolution}
+        onClick={verifyClickHandler}
       >
         Verify Solution
       </button>
@@ -138,7 +148,10 @@ const shuffleArray = (array) => {
 const checkIfValidPlacement = (board, row, column, value) => {
   //Check if value is in row or column
   for (let i = 0; i < board.length; i++) {
-    if (board[row][i] === value || board[i][column] === value) {
+    if (board[row][i] === value && i !== column) {
+      return false
+    }
+    if (board[i][column] === value && i !== row) {
       return false
     }
   }
@@ -148,7 +161,7 @@ const checkIfValidPlacement = (board, row, column, value) => {
   const cubicleColumn = Math.floor(column / 3) * 3
   for (let i = cubicleRow; i < cubicleRow + 3; i++) {
     for (let j = cubicleColumn; j < cubicleColumn + 3; j++) {
-      if (board[i][j] === value) {
+      if (board[i][j] === value && i !== row && j !== column) {
         return false
       }
     }
