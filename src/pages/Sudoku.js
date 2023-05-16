@@ -101,15 +101,16 @@ const Sudoku = () => {
 
   return (
     <>
+      <h2 className="gameTitle">Pathways: Sudoku</h2>
       <div className="sudoku">
         {Array(gameSize).fill("A").map((i, index) => {
           let calculatedIndex = index * gameSize
           return (
             <>
               <div className="cubicleRow" key={index}>
-                <Cubicle letterPlacements={letterPlacements} startRow={calculatedIndex} startColumn={0} onCellChange={handleCellLetterChange}/>
-                <Cubicle letterPlacements={letterPlacements} startRow={calculatedIndex} startColumn={3} onCellChange={handleCellLetterChange}/>
-                <Cubicle letterPlacements={letterPlacements} startRow={calculatedIndex} startColumn={6} onCellChange={handleCellLetterChange}/>
+                <Cubicle letterPlacements={letterPlacements} cellsThatCanBeChanged={cellsThatCanBeChanged} startRow={calculatedIndex} startColumn={0} onCellChange={handleCellLetterChange}/>
+                <Cubicle letterPlacements={letterPlacements} cellsThatCanBeChanged={cellsThatCanBeChanged} startRow={calculatedIndex} startColumn={3} onCellChange={handleCellLetterChange}/>
+                <Cubicle letterPlacements={letterPlacements} cellsThatCanBeChanged={cellsThatCanBeChanged} startRow={calculatedIndex} startColumn={6} onCellChange={handleCellLetterChange}/>
               </div>
             </>
           )
